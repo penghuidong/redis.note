@@ -400,13 +400,14 @@ typedef long long mstime_t; /* millisecond time type. */
 #define REDIS_LRU_CLOCK_RESOLUTION 1000 /* LRU clock resolution in ms */
 typedef struct redisObject {
 
-    // 类型
-    unsigned type:4;
+	// Redis定义了redisObjec结构体来表示string、hash、list、set、zset五种数据类型
+	// refer REDIS_STRING 0
+    unsigned type:4; 
 
     // 编码
-    unsigned encoding:4;
+    unsigned encoding:4;// 表示该类型的物理编码方式 refer REDIS_ENCODING_INT
 
-    // 对象最后一次被访问的时间
+    // 对象最后一次被访问的时间. 表示当内存超限时采用LRU算法清除内存中的对象
     unsigned lru:REDIS_LRU_BITS; /* lru time (relative to server.lruclock) */
 
     // 引用计数
@@ -416,6 +417,15 @@ typedef struct redisObject {
     void *ptr;
 
 } robj;
+/* 为什么：
+ *		为了识别不同的数据类型。redisObjec就是string、hash、list、set、zset的父类，
+ *		可以在函数间传递时隐藏具体的类型信息，只是C语言中没有“继承”的概念，
+ *		所以作者抽象了redisObjec结构来到达同样的目的
+ * 是什么：
+ *		为了便于操作，Redis采用redisObjec结构来统一五种不同的数据类型，
+ *		这样所有的数据类型就都可以以相同的形式在函数间传递而不用使用特定的类型结构
+*/
+
 
 /* Macro used to obtain the current LRU clock.
  * If the current resolution is lower than the frequency we refresh the
