@@ -107,7 +107,7 @@ typedef struct dictType {
 
 /* This is our hash table structure. Every dictionary has two of this as we
  * implement incremental rehashing, for the old to the new table. */
-/*
+/* dictht : dictionary hash table
  * 哈希表
  *
  * 每个字典都使用两个哈希表，从而实现渐进式 rehash 。
