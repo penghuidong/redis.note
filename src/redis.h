@@ -465,7 +465,10 @@ typedef struct redisDb {
     // 数据库键空间，保存着数据库中的所有键值对
     dict *dict;                 /* The keyspace for this DB */
 
-    // 键的过期时间，字典的键为键，字典的值为过期事件 UNIX 时间戳
+    // 名字： 过期字典
+	// 类型： 字典
+	// 作用： 保存数据库中所有键的过期时间
+	//		  字典的键为键，字典的值为过期的UNIX 时间戳（毫秒）
     dict *expires;              /* Timeout of keys with a timeout set */
 
     // 正处于阻塞状态的键
@@ -740,7 +743,7 @@ typedef struct zskiplistNode {
         // 前进指针
         struct zskiplistNode *forward;
 
-        // 跨度
+        // 跨度: 记录两个节点间的距离 
         unsigned int span;
 
     } level[];

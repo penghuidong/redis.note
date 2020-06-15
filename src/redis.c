@@ -1713,6 +1713,8 @@ void createSharedObjects(void) {
     shared.maxstring = createStringObject("maxstring",9);
 }
 
+
+// 初始化服务器状态结构
 void initServerConfig() {
     int j;
 
@@ -2075,7 +2077,7 @@ void initServer() {
     server.clients_paused = 0;
 
     // 创建共享对象
-    createSharedObjects();
+    createSharedObjects();//避免反复创建相同的对象
     adjustOpenFilesLimit();
     server.el = aeCreateEventLoop(server.maxclients+REDIS_EVENTLOOP_FDSET_INCR);
     server.db = zmalloc(sizeof(redisDb)*server.dbnum);
