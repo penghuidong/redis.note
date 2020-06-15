@@ -831,7 +831,7 @@ dictEntry *dictFind(dict *d, const void *key)
     // T = O(1)
     for (table = 0; table <= 1; table++) {
 
-        // 计算索引值
+        // 计算索引值,  damonpeng这里为什么要合sizemask按位与
         idx = h & d->ht[table].sizemask;
 
         // 遍历给定索引上的链表的所有节点，查找 key

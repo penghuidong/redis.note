@@ -845,7 +845,7 @@ struct redisServer {
     // serverCron() 每秒调用的次数
     int hz;                     /* serverCron() calls frequency in hertz */
 
-    // 数据库
+    // 一个数组， 保存着服务器中的所有数据库
     redisDb *db;
 
     // 命令表（受到 rename 配置选项的作用）

@@ -1714,7 +1714,7 @@ void zsetConvert(robj *zobj, int encoding) {
  * Sorted set commands 
  *----------------------------------------------------------------------------*/
 
-/* This generic command implements both ZADD and ZINCRBY. */
+/* This generic command implements both ZADD(incr=0) and ZINCRBY. */
 void zaddGenericCommand(redisClient *c, int incr) {
 
     static char *nanerr = "resulting score is not a number (NaN)";
@@ -1724,7 +1724,7 @@ void zaddGenericCommand(redisClient *c, int incr) {
     robj *zobj;
     robj *curobj;
     double score = 0, *scores = NULL, curscore = 0.0;
-    int j, elements = (c->argc-2)/2;
+    int j, elements = (c->argc-2)/2;  //zadd 33_MaxFightingRank  1  112748320862637127
     int added = 0, updated = 0;
 
     // 输入的 score - member 参数必须是成对出现的

@@ -2217,12 +2217,13 @@ void initServer() {
 void populateCommandTable(void) {
     int j;
 
-    // 命令的数量
+    // 命令的数量   sizeof 数组 = 数组大小
     int numcommands = sizeof(redisCommandTable)/sizeof(struct redisCommand);
 
     for (j = 0; j < numcommands; j++) {
         
         // 指定命令
+		//{"zadd",zaddCommand,-4,"wm",0,NULL,1,1,1,0,0}
         struct redisCommand *c = redisCommandTable+j;
 
         // 取出字符串 FLAG
