@@ -85,6 +85,10 @@ void zlibc_free(void *ptr) {
 
 #endif
 
+
+
+// 如果__n不是8的倍数,则_n 向上取8倍数整
+// 8 - _n&7 --> 8 - _n%8
 #define update_zmalloc_stat_alloc(__n) do { \
     size_t _n = (__n); \
     if (_n&(sizeof(long)-1)) _n += sizeof(long)-(_n&(sizeof(long)-1)); \
