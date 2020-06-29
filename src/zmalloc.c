@@ -87,6 +87,9 @@ void zlibc_free(void *ptr) {
 
 
 
+//  注意这里的 do ... while(0);的作用： 宏定义文本替换,在宏定义比较复杂的情况下，不容易出错
+//  如果使用malloc分配内存的大小不是8的倍数， malloc会向上取8倍整数， 进行8字节对其，
+//  这个宏更大的意义是精确used_memory的数值，即精确维护已分配内存的大小
 // 如果__n不是8的倍数,则_n 向上取8倍数整
 // 8 - _n&7 --> 8 - _n%8
 #define update_zmalloc_stat_alloc(__n) do { \
