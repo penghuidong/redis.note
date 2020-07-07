@@ -180,7 +180,7 @@ typedef struct aeEventLoop {
     // 事件处理器的开关
     int stop;
 
-    // 多路复用库的私有数据
+    // 多路复用库的私有数据 struct aeApiState
     void *apidata; /* This is used for polling API specific data */
 
     // 在处理事件前要执行的函数

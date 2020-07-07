@@ -178,7 +178,7 @@ int aeCreateFileEvent(aeEventLoop *eventLoop, int fd, int mask,
     if (fd >= eventLoop->setsize) return AE_ERR;
 
     // 取出文件事件结构
-    aeFileEvent *fe = &eventLoop->events[fd];
+    aeFileEvent *fe = &eventLoop->events[fd];  // 这里怎么保证不越界??
 
     // 监听指定 fd 的指定事件
     if (aeApiAddEvent(eventLoop, fd, mask) == -1)
