@@ -436,13 +436,16 @@ int anetWrite(int fd, char *buf, int count)
  * 绑定并创建监听套接字
  */
 static int anetListen(char *err, int s, struct sockaddr *sa, socklen_t len, int backlog) {
-    if (bind(s,sa,len) == -1) {
+    /*bind: Traditionally,  this  operation  is  called “assigning a name to a socket”*/
+	if (bind(s,sa,len) == -1) {
         anetSetError(err, "bind: %s", strerror(errno));
         close(s);
         return ANET_ERR;
     }
-
-    if (listen(s, backlog) == -1) {
+	/*marks the socket referred to by sockfd as a passive socket, 
+	 * that is, as a socket that will be used to accept incoming 
+	 * connection requests using accept*/
+    if (listen(s, backlog) == -1) {  // TODO 这个backlog是个啥
         anetSetError(err, "listen: %s", strerror(errno));
         close(s);
         return ANET_ERR;
@@ -470,7 +473,14 @@ static int _anetTcpServer(char *err, int port, char *bindaddr, int af, int backl
     memset(&hints,0,sizeof(hints));
     hints.ai_family = af;
     hints.ai_socktype = SOCK_STREAM;
-    hints.ai_flags = AI_PASSIVE;    /* No effect if bindaddr != NULL */
+	/*
+	 *	如果设置了 AI_PASSIVE 标志,并且 bindaddr 是 NULL, 那么返回的socket地址可以用于的bind()函数，
+	 *
+	 *	返回的地址是通配符地址(wildcard address, IPv4时是INADDR_ANY,IPv6时是IN6ADDR_ANY_INIT)，
+	 *
+	 *	这样应用程序(典型是server)就可以使用这个通配符地址用来接收任何请求主机地址的连接，
+	 */
+    hints.ai_flags = AI_PASSIVE;
 
     if ((rv = getaddrinfo(bindaddr,_port,&hints,&servinfo)) != 0) {
         anetSetError(err, "%s", gai_strerror(rv));
@@ -493,6 +503,7 @@ static int _anetTcpServer(char *err, int port, char *bindaddr, int af, int backl
 error:
     s = ANET_ERR;
 end:
+	/*getaddrinfo返回的所有存储空间都是动态获取的*/
     freeaddrinfo(servinfo);
     return s;
 }
