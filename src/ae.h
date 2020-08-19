@@ -171,7 +171,7 @@ typedef struct aeEventLoop {
     // 已注册的文件事件(数组, 文件描述符索引,默认10128大小)
     aeFileEvent *events; /* Registered events */
 
-    // 已就绪的文件事件（数组,文件描述符索引,默认10128大小）
+    // 已就绪的文件事件,文件描述符+事件掩码（数组,文件描述符索引,默认10128大小）
     aeFiredEvent *fired; /* Fired events */
 
     // 时间事件
@@ -180,7 +180,7 @@ typedef struct aeEventLoop {
     // 事件处理器的开关
     int stop;
 
-    // 多路复用库的私有数据 struct aeApiState
+    // 多路复用库的私有数据 epoll fd 和 10128个 struct epoll_event  
     void *apidata; /* This is used for polling API specific data */
 
     // 在处理事件前要执行的函数

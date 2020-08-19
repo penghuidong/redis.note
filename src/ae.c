@@ -61,7 +61,8 @@
 #endif
 
 /*
- * 初始化事件处理器状态
+ * 初始化事件处理器状态  setsize -> 10128
+ * Q: 如果有文件描述符大于10128呢？
  */
 aeEventLoop *aeCreateEventLoop(int setsize) {
     aeEventLoop *eventLoop;

@@ -60,7 +60,8 @@ static int aeApiCreate(aeEventLoop *eventLoop) {
         return -1;
     }
 
-    // 创建 epoll 实例, epoll自己占用一个fd
+    // 创建 epoll 实例, epoll自己占用一个fd, epoll_create这里的1024只是提示，
+	// 和向后兼容， 没有实际意义
     state->epfd = epoll_create(1024); /* 1024 is just a hint for the kernel */
     if (state->epfd == -1) {
         zfree(state->events);

@@ -1985,7 +1985,7 @@ int listenToPort(int port, int *fds, int *count) {
 
     /* Force binding of 0.0.0.0 if no bind address is specified, always
      * entering the loop if j == 0. */
-    if (server.bindaddr_count == 0) server.bindaddr[0] = NULL;
+    if (server.bindaddr_count == 0) server.bindaddr[0] = NULL; 
     for (j = 0; j < server.bindaddr_count || j == 0; j++) {
         if (server.bindaddr[j] == NULL) {
             /* Bind * for both IPv6 and IPv4, we enter here only if
