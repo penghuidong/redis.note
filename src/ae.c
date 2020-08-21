@@ -358,7 +358,7 @@ int aeDeleteTimeEvent(aeEventLoop *eventLoop, long long id)
  *    Much better but still insertion or deletion of timers is O(N).
  * 2) Use a skiplist to have this operation as O(1) and insertion as O(log(N)).
  */
-// 寻找里目前时间最近的时间事件
+// 寻找里目前时间最近的时间事件(这里不能说最近的时间事件吧， 应该是找最旧的事件)
 // 因为链表是乱序的，所以查找复杂度为 O（N）
 static aeTimeEvent *aeSearchNearestTimer(aeEventLoop *eventLoop)
 {
